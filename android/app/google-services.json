@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1034388167715",
+    "project_id": "rto-app-fed9b",
+    "storage_bucket": "rto-app-fed9b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034388167715:android:582cbcec803cc1cdfb6596",
+        "android_client_info": {
+          "package_name": "com.rohit.rto_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyPHowuldW2slxhuyJHLE90tAiJ16mddk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
