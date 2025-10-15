@@ -147,15 +147,6 @@ class _SaveRecordPageState extends State<SaveRecordPage> {
 
     try {
       await StorageService().saveRecords(list);
-      // schedule notification for follow-up at registrationDate + 29 days
-      final notifyAt = (rec.registrationDate).add(const Duration(days: 29));
-      final nid = rec.id.hashCode & 0x7fffffff;
-      await NotificationService().scheduleNotification(
-        id: nid,
-        title: 'Follow up with ${rec.name}',
-        body: '29 days since registration. Contact the client ${rec.mobile}',
-        scheduledDate: notifyAt,
-      );
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,

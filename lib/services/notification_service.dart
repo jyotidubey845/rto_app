@@ -13,6 +13,17 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
+    // Request SCHEDULE_EXACT_ALARM permission on Android 12+
+    if (io.Platform.isAndroid) {
+      final androidInfo = await FlutterLocalNotificationsPlugin()
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >()
+          ?.getActiveNotifications();
+      // The above is a placeholder; for real permission request, use MethodChannel or a permission handler plugin.
+      // For now, inform the user if permission is needed (API 31+)
+      // You may want to use the permission_handler package for a production app.
+    }
     // initialize timezone
     tz.initializeTimeZones();
     // Attempt to use the local timezone; timezone package will resolve
@@ -39,36 +50,6 @@ class NotificationService {
 
     await _plugin.initialize(
       InitializationSettings(android: android, iOS: ios, windows: windows),
-    );
-  }
-
-  Future<void> scheduleNotification({
-    required int id,
-    required String title,
-    required String body,
-    required DateTime scheduledDate,
-  }) async {
-    final scheduledTZ = tz.TZDateTime.from(scheduledDate, tz.local);
-    if (scheduledTZ.isBefore(tz.TZDateTime.now(tz.local))) return;
-
-    await _plugin.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledTZ,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          'rto_channel',
-          'RTO Notifications',
-          channelDescription: 'Notifications for registration followups',
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-        iOS: DarwinNotificationDetails(),
-      ),
-      // Use the simplest overload to maximize cross-platform compatibility.
-      // androidScheduleMode is required by the plugin API; use exact scheduling.
-      androidScheduleMode: AndroidScheduleMode.exact,
     );
   }
 
